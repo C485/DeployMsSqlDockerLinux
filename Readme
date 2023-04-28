@@ -1,0 +1,40 @@
+Read https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-configure?view=sql-server-ver16&pivots=cs1-bash#persist
+
+Before starting please check in console:
+docker run --rm alpine ping -c 3 google.com
+
+it should show ping to google.com, if there is an error do this:
+
+nano /etc/docker/daemon.json
+paste json and save(you can use your favorite dns):
+
+{
+  "dns": ["8.8.8.8", "8.8.4.4"]
+}
+
+run:
+
+systemctl restart docker
+
+check again:
+docker run --rm alpine ping -c 3 google.com
+
+
+
+
+commands to deploy:
+mkdir mssql-with-fts
+cd mssql-with-fts
+nano docker-compose.yml
+//// paste content of docker-compose.yml to nano and save
+nano Dockerfile
+//// paste content of Dockerfile to nano and save
+docker compose up
+//// this will start container in context of your console, see if there is no errors, ctrl+c to exit, this will stop container
+docker compose start
+
+
+
+///// for clean reinstall use command
+docker compose down --rmi all -v
+///// this will remove everything that was created/downloaded

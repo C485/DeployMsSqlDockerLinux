@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mssql:
+    restart: always
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql-with-fts-server
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=%7HjQ8rW
+    ports:
+      - '1433:1433'
+    volumes:
+      - mssql-with-fts-data:/var/opt/mssql
+
+volumes:
+  mssql-with-fts-data:
